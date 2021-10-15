@@ -1,0 +1,873 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "Relaxh",
+      "description": "REST API for Relaxh project"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3001",
+            "description": "Servidor de desenvolvimento"
+        }
+    ],
+    "tags": [
+      {
+        "name": "Users",
+        "description": "Endpoints de Usuários"
+      },
+      {
+          "name": "Hotel",
+          "description": "Endpoints do Hotel"
+      },
+      {
+          "name": "Auth",
+          "description": "Endpoints de Autenticação"
+      },
+      {
+          "name": "Services",
+          "description": "Endpoints de Services"
+      }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID do usuário"                                            
+                    },
+                    "nome": {
+                        "type": "string",
+                        "description": "Nome do usuário"                                            
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "E-mail do usuário"                                            
+                    },                                
+                    "role": {
+                        "type": "string",
+                        "description": "Role do usuário"                                            
+                    }, 
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Data de criação"                                            
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Data de atualização"
+                    }
+                }
+            }
+        }           
+    },
+    "paths": {
+        "/users/create": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Cria um usuário",
+                "requestBody": {
+                    "description": "Usuário a ser criado",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "description": "Nome do usuário"                                        
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email do usuário"                                            
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Senha do usuário"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "ID do usuário"                                            
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "description": "Role do usuário"
+                                        },
+                                        "nome": {
+                                            "type": "string",
+                                            "description": "Nome do usuário"                                            
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "description": "Email do usuário"                                            
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "description": "Data de atualização"
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "description": "Data de criação"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "E-mail já cadastrado."                    
+                    },
+                    "500":{
+                        "description": "E-mail Inválido"
+                    }
+                }
+            }
+        },
+        "/users/": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Pegue informações do usuário a partir do id",
+                "requestBody": {
+                    "description": "Informações do Usuário",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do usuário"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User" 
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Não há quarto Disponíveis"                    
+                    }
+                }
+            }
+        },
+        "/users/edit": {
+            "put": {
+                "tags": ["Users"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Editar info do Usuário",
+                "requestBody": {
+                    "description": "Editar",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do usuário"                                        
+                                    },
+                                    "nome": {
+                                        "type": "string",
+                                        "description": "Novo nome do usuário"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User" 
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"                    
+                    }
+                }
+            }
+        },
+        "/users/delete": {
+            "delete": {
+                "tags": ["Users"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Deletar Usuário",
+                "requestBody": {
+                    "description": "Deletar",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do usuário"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"                    
+                    }
+                }
+            }
+        },
+        "/users/reserve": {
+            "post": {
+                "tags": ["Users"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Reserva uma vaga no Hotel",
+                "requestBody": {
+                    "description": "Informações da Reserva",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "E-mail do usuário"                                        
+                                    },
+                                    "tipo_quarto": {
+                                        "type": "string",
+                                        "description": "Tipo do quarto a ser reservado (ex:Standart, Premium, Deluxe)"                                            
+                                    },
+                                    "data_entrada": {
+                                        "type": "string",
+                                        "description": "Data de entrada (timestamp)"
+                                    },
+                                    "data_saida": {
+                                        "type": "string",
+                                        "description": "Data de saída (timestamp)"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Token de Check-in"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Não há quarto Disponíveis"                    
+                    }
+                }
+            }     
+        },
+        "/reserve/delete": {
+            "delete": {
+                "tags": ["Users"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Deletar Reserva",
+                "requestBody": {
+                    "description": "Deletar Reserva",
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do Serviço"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    }
+                }
+            } 
+        },
+        "/reserve/get": {
+            "get": {
+                "tags": ["Users"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Pegar informações da Reserva",
+                "requestBody": {
+                    "description": "Informaçoes da Reserva",
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do quarto"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "Id da Reserva"                                            
+                                        },
+                                        "tipo_quarto": {
+                                            "type": "string",
+                                            "description": "Tipo do quarto"                                            
+                                        },
+                                        "numero_pessoas": {
+                                            "type": "integer",
+                                            "description": "Numero de pessoas no quarto"                                            
+                                        },
+                                        "numero_quarto": {
+                                            "type": "integer",
+                                            "description": "Numero do quarto"                                            
+                                        },
+                                        "data_entrada": {
+                                            "type": "string",
+                                            "description": "Data de Entrada"                                            
+                                        },
+                                        "data_saida": {
+                                            "type": "string",
+                                            "description": "Data de saída"                                            
+                                        },
+                                        "id_usuario": {
+                                            "type": "string",
+                                            "description": "Id do usuario"                                            
+                                        },
+                                        "id_quarto": {
+                                            "type": "string",
+                                            "description": "Id do quarto"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        },
+        "/auth/login": {
+            "post": {                
+                "tags": ["Auth"],
+                "summary": "Recebe o access-token e o refresh-token do usuário ",
+                "requestBody": {
+                    "description": "As informações de login do usuário",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {                                
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email do usuário"                                            
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Senha do usuário"
+                                    }
+                                },
+                                "example": {
+                                    "email": "teste@email.com",
+                                    "password": "123456"
+                                }
+                            }
+                        }                                                          
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "acess-token do usuário"                                            
+                                        },
+                                        "refreshToken": {
+                                            "type": "string",
+                                            "description": "refresh-token do usuário"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "E-mail ou senha inválido"                    
+                    }
+                }                
+            }
+        },
+        "/auth/refresh":{
+            "post": {                
+                "tags": ["Auth"],
+                "summary": "Generate refresh-token",
+                "requestBody": {
+                    "description": "Gerar o refresh-token",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {                                
+                                "properties": {
+                                    "refreshToken": {
+                                        "type": "string",
+                                        "description": "refresh-token"                                            
+                                    }
+                                }
+                            }
+                        }                                                          
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "refresh-token do usuário"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro Inesperado"                    
+                    }
+                }                
+            }
+        },
+        "/hotel/quartos": {
+            "post": {
+                "tags": ["Hotel"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Criação de Quartos",
+                "requestBody": {
+                    "description": "Informações do Quarto",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "tipo_quarto": {
+                                        "type": "string",
+                                        "description": "Tipo do quarto (ex: Standart, Premium, Deluxe)"                                        
+                                    },
+                                    "numero_quarto": {
+                                        "type": "integer",
+                                        "description": "Tipo do quarto a ser reservado (ex:Standart, Premium, Deluxe)"                                            
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "Id do quarto"                                            
+                                        },
+                                        "numero_pessoas": {
+                                            "type": "integer",
+                                            "description": "Numero de pessoas no quarto"                                            
+                                        },
+                                        "disponibilidade": {
+                                            "type": "boolean",
+                                            "description": "Disponibilidade do quarto"                                            
+                                        },
+                                        "numero_quarto": {
+                                            "type": "integer",
+                                            "description": "Numero do quarto"                                            
+                                        },
+                                        "tipo_quarto": {
+                                            "type": "string",
+                                            "description": "Tipo do quarto"                                            
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "description": "Data de update"                                            
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "description": "Data de criação"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Quarto já cadastrado"                    
+                    }
+                }
+            } 
+        },
+        "/hotel/quartos/delete": {
+            "delete": {
+                "tags": ["Hotel"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Deletar Quarto",
+                "requestBody": {
+                    "description": "Deletar Quarto",
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do quarto"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    }
+                }
+            } 
+        },
+        "/hotel/quartos/get": {
+            "get": {
+                "tags": ["Hotel"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Pegar informações do Quarto",
+                "requestBody": {
+                    "description": "informaçoes do quarto",
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do quarto"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "Id do quarto"                                            
+                                        },
+                                        "numero_pessoas": {
+                                            "type": "integer",
+                                            "description": "Numero de pessoas no quarto"                                            
+                                        },
+                                        "disponibilidade": {
+                                            "type": "boolean",
+                                            "description": "Disponibilidade do quarto"                                            
+                                        },
+                                        "numero_quarto": {
+                                            "type": "integer",
+                                            "description": "Numero do quarto"                                            
+                                        },
+                                        "tipo_quarto": {
+                                            "type": "string",
+                                            "description": "Tipo do quarto"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        },
+        "/hotel/checkin": {
+            "post": {
+                "tags": ["Hotel"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Rota de Check-in",
+                "requestBody": {
+                    "description": "Token de Check-in",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Token de Check-in"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Token de Check-out"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "O token expirou"                    
+                    }
+                }
+            } 
+        },
+        "/hotel/checkout": {
+            "post": {
+                "tags": ["Hotel"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Rota de Check-out",
+                "requestBody": {
+                    "description": "Token de Check-out",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Token de Check-out"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "text": {
+                                            "type": "string",
+                                            "description": "Check-out"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "O token expirou"                    
+                    }
+                }
+            } 
+        },
+        "/service/": {
+            "post": {
+                "tags": ["Services"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Rota de cadastro de Serviços",
+                "requestBody": {
+                    "description": "Informações do Serviço",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "descrição": {
+                                        "type": "string",
+                                        "description": "Descrição do Serviço"                                        
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "description": "Tipo do Serviço"                                        
+                                    },
+                                    "horario": {
+                                        "type": "string",
+                                        "description": "Horário do serviço (opcional)"                                        
+                                    },
+                                    "id_quarto": {
+                                        "type": "string",
+                                        "description": "Id do quarto que está pedindo o serviço"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "text": {
+                                            "type": "string",
+                                            "description": "Serviço Cadastrado"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        },
+        "/service/delete": {
+            "delete": {
+                "tags": ["Services"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Deletar Serviço",
+                "requestBody": {
+                    "description": "Deletar Serviço",
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do Serviço"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    }
+                }
+            } 
+        },
+        "/service/getAll": {
+            "get": {
+                "tags": ["Services"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Mostrar todos os serviços de quarto",
+                "requestBody": {
+                    "description": "Serviços de Quarto",
+                    "required": true
+                },                
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "service": {
+                                            "type": "string",
+                                            "description": "Info do Serviço"                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        }
+    }
+}
