@@ -54,9 +54,6 @@ module.exports = {
         body("tipo")
         .isString()
         .withMessage("Tipo de serviço inválido"),
-        body("preco")
-        .isInteger()
-        .withMessage("Preço Inválido"),
         body("nome")
         .isString()
         .withMessage("nome Inválido"),
