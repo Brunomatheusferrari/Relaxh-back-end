@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "test": "jest",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "admin": "node generateAdmin --nome=Admin --email=vinibilk4@gmail.com --password=SenhaForte#15 "
   },
   "keywords": [],
   "author": "",

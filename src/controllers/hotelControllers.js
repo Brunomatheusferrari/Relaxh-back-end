@@ -2,9 +2,9 @@ const hotelServices = require("../services/hotelServices");
 
 async function check_in(req, res, next) {
     try {
-        const user = await hotelServices.check_in(req.body);
+        const token = await hotelServices.check_in(req.body);
 
-        res.status(201).json(user);
+        res.status(200).json(token);
     } catch (error) {
         console.log(error);
         next(error);
@@ -13,9 +13,9 @@ async function check_in(req, res, next) {
 
 async function check_out(req, res, next) {
     try {
-        const user = await hotelServices.check_out(req.body);
+        const checkout = await hotelServices.check_out(req.body);
 
-        res.status(201).json(user);
+        res.status(200).json(checkout);
     } catch (error) {
         console.log(error);
         next(error);
@@ -24,9 +24,9 @@ async function check_out(req, res, next) {
 
 async function quartos(req, res, next) {
     try {
-        const user = await hotelServices.quartos(req.body);
+        const quarto = await hotelServices.quartos(req.body);
 
-        res.status(201).json(user);
+        res.status(201).json(quarto);
     } catch (error) {
         console.log(error);
         next(error);
@@ -37,17 +37,16 @@ async function getQuarto(req, res, next){
     try {
         const quarto = await hotelServices.getQuarto(req.body);
 
-        res.status(201).json(quarto);
+        res.status(200).json(quarto);
     } catch (error) {
         console.log(error);
         next(error);
     }
 }
 
-
 async function deleteQuarto(req, res, next){
     try {
-        const user = await hotelServices.deleteQuarto(req.body);
+        await hotelServices.deleteQuarto(req.body);
 
         res.status(204).end();
     } catch (error) {
@@ -64,7 +63,18 @@ async function getQuartobyUser(req, res, next){
             throw new Error("Quarto não Encontrado")
         }
 
-        res.status(201).json(id_quarto)
+        res.status(200).json(id_quarto)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+async function getReservas(req, res, next){
+    try {
+        const reservas = await hotelServices.getReservas()
+
+        res.status(200).json(reservas)
     } catch (error) {
         console.log(error)
         next(error)
@@ -77,7 +87,8 @@ module.exports = {
     check_out,
     getQuarto,
     deleteQuarto,
-    getQuartobyUser
+    getQuartobyUser,
+    getReservas
 }
 
 

@@ -762,6 +762,64 @@
                 }
             } 
         },
+        "/hotel/quarto-user":{
+            "get": {
+                "tags": ["Hotel"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Rota para pegar o quarto a partir do id do usuário",
+                "requestBody": {
+                    "description": "Id do usuário",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Id do usuário"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "Id do quarto"                                            
+                                        },
+                                        "numero_pessoas": {
+                                            "type": "integer",
+                                            "description": "Número de pessoas naquele quarto" 
+                                        },
+                                        "disponibilidade": {
+                                            "type": "boolean",
+                                            "description": "Disponibilidade do quarto" 
+                                        },
+                                        "numero_quarto": {
+                                            "type": "integer",
+                                            "description": "Número do quarto" 
+                                        },
+                                        "tipo_quarto": {
+                                            "type": "string",
+                                            "description": "Tipo do quarto" 
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/service/": {
             "post": {
                 "tags": ["Services"],

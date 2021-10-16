@@ -28,7 +28,7 @@ async function getAll(req, res, next) {
 
 async function deleteService(req, res, next){
     try {
-        const user = await serviceServices.deleteService(req.body);
+        await serviceServices.deleteService(req.body);
 
         res.status(204).end();
     } catch (error) {
@@ -60,7 +60,7 @@ async function getAllComidas(req,res,next){
             throw new Error("Produtos Não Encontrados")
         }
 
-        res.status(201).json(comidas)
+        res.status(200).json(comidas)
     } catch (error) {
         console.log(error);
         next(error);
@@ -72,10 +72,10 @@ async function getQuartobyUser(req,res,next){
         const quarto = await serviceServices.getQuartoFromUser(req.query);
 
         if(!quarto){
-            throw new Error("Produtos Não Encontrados")
+            throw new Error("Não foi possivel pegar a informação")
         }
 
-        res.status(201).json(quarto)
+        res.status(200).json(quarto)
     } catch (error) {
         console.log(error);
         next(error);
@@ -87,10 +87,10 @@ async function getServicosUser(req,res,next){
         const servicos = await serviceServices.getServicosUser(req.query);
 
         if(!servicos){
-            throw new Error("Produtos Não Encontrados")
+            throw new Error("Não foi possivel encontrar a informação requisitada")
         }
 
-        res.status(201).json(servicos)
+        res.status(200).json(servicos)
     } catch (error) {
         console.log(error);
         next(error);
@@ -105,7 +105,7 @@ async function getComida(req, res, next){
             throw new Error("Produtos Não Encontrado")
         }
 
-        res.status(201).json(comida)
+        res.status(200).json(comida)
     } catch (error) {
         console.log(error);
         next(error);
