@@ -11,7 +11,7 @@
             "description": "Servidor de desenvolvimento"
         },
         {
-            "url": "",
+            "url": "https://relaxh-server.herokuapp.com",
             "description": "Servidor de Produção"
         }
     ],
