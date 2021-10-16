@@ -68,9 +68,7 @@ async function sendEmail(email,text) {
     await transporter.sendMail(emailText, function (error, info) {
         if (error) {
             console.log(error);
-        } else {
-            console.log("E-mail Enviado")
-        }
+        } 
     })
 }
 
@@ -195,6 +193,10 @@ async function getQuartobyUser({id}){
     return reserva.id_quarto    
 }
 
+async function getReservas(){
+    return await Reserva.findAll()
+}
+
 
 
 module.exports = {
@@ -203,5 +205,6 @@ module.exports = {
     check_out,
     getQuarto,
     deleteQuarto,
-    getQuartobyUser
+    getQuartobyUser,
+    getReservas
 };

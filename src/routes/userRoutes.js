@@ -9,7 +9,7 @@ const authentication = require("../middlewares/authentication");
 const userValidations = require("../validations/userValidations");
 
 router.post("/create", usuarioValidations.post, usersControllers.create);
-router.get("/", authentication(["guest", "admin", "user"]), usersControllers.getUser)
+router.get("/", authentication(["guest", "admin", "user"]), userValidations.get,usersControllers.getUser)
 router.put("/edit", authentication(["guest", "admin", "user"]), usuarioValidations.put, usersControllers.editUser)
 router.delete("/delete", authentication(["guest", "admin", "user"]),usuarioValidations.delete , usersControllers.deleteUser)
 router.post("/reserve", authentication(["guest", "admin", "user"]),usuarioValidations.postReserva ,usersControllers.reserve)

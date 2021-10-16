@@ -4,8 +4,6 @@ const { Servico, Quarto, Comida, Usuario, Reserva, Comida_Servico} = require("..
 async function register(serviceInfo){
     const {comidas, tipo, horario, descricao, id_quarto} = serviceInfo
 
-    // const idComidas = comidas.map(comida => comida.id)    
-
     const servico = await Servico.create({
         tipo,
         horario,
@@ -117,6 +115,5 @@ module.exports = {
     postComida,
     getAllComidas,
     getQuartoFromUser,
-    getServicosUser,
-    getComida
+    getServicosUser
 };
