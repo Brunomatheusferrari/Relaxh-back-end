@@ -69,7 +69,7 @@ async function deleteReserva(req, res, next){
 
 async function getReserva(req, res, next){
     try {
-        const reserva = await usersServices.getReserva(req.body);
+        const reserva = await usersServices.getReserva(req.query);
 
         res.status(200).json(reserva);
     } catch (error) {

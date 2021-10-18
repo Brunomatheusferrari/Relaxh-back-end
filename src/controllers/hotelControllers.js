@@ -35,7 +35,7 @@ async function quartos(req, res, next) {
 
 async function getQuarto(req, res, next){
     try {
-        const quarto = await hotelServices.getQuarto(req.body);
+        const quarto = await hotelServices.getQuarto(req.query);
 
         res.status(200).json(quarto);
     } catch (error) {
