@@ -615,26 +615,17 @@
                 }
             } 
         },
-        "/hotel/quartos/get": {
+        "/hotel/quartos/get{?id}": {
             "get": {
                 "tags": ["Hotel"],
                 "security": [{"BearerAuth": []}],
                 "summary": "Pegar informações do Quarto",
-                "requestBody": {
-                    "description": "informaçoes do quarto",
-                    "content": {
-                        "application/json": {                            
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "string",
-                                        "description": "Id do quarto"                                        
-                                    }
-                                }
-                            }
-                        }
-                    }
+                "parameters": {
+                    "name": "id_quarto",
+                    "in": "query",
+                    "description":"Id do quarto",
+                    "required": "true",
+                    "type":"string"
                 },                
                 "responses": {
                     "201": {
@@ -664,6 +655,7 @@
                                             "type": "string",
                                             "description": "Tipo do quarto"                                            
                                         }
+                                        
                                     }
                                 }
                             }
@@ -930,6 +922,70 @@
                     }
                 }
             } 
+        },
+        "/service/comida": {
+            "post": {
+                "tags": ["Services"],
+                "security": [{"BearerAuth": []}],
+                "summary": "Rota de cadastro de Alimentos",
+                "requestBody": {
+                    "description": "Informações do Alimento",
+                    "required": true,
+                    "content": {
+                        "application/json": {                            
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "tipo": {
+                                        "type": "string",
+                                        "description": "Tipo do Alimento"                                        
+                                    },
+                                    "nome": {
+                                        "type": "string",
+                                        "description": "Nome do Alimento"                                        
+                                    },
+                                    "preco": {
+                                        "type": "integer",
+                                        "description": "Preço do Alimento"                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },                
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "description": "Id do Alimento"
+                                            },
+                                            "tipo": {
+                                                "type": "string",
+                                                "description": "Tipo do Alimento"                                        
+                                            },
+                                            "nome": {
+                                                "type": "string",
+                                                "description": "Nome do Alimento"                                        
+                                            },
+                                            "preco": {
+                                                "type": "integer",
+                                                "description": "Preço do Alimento"                                        
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -13,4 +13,5 @@ router.get("/quartos/get", authentication(["admin"]), hotelControllers.getQuarto
 router.get("/quarto-user", authentication(["admin", "user"]),hotelControllers.getQuartobyUser)
 router.get("/reservas",authentication(["admin", "user"]),hotelControllers.getReservas)
 
+
 module.exports = router;
