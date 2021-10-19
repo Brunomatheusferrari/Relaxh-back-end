@@ -71,7 +71,7 @@ async function getReserva(req, res, next){
     try {
         const reserva = await usersServices.getReserva(req.query);
 
-        res.status(200).json(reserva);
+        res.status(200).json(reserva)
     } catch (error) {
         console.log(error);
         next(error);

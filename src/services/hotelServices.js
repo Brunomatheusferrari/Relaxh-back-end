@@ -442,7 +442,7 @@ async function sendEmail(email,text) {
         attachDataUrls: true,
         subject: "Relaxh",
         text: "Obrigado Pela Preferência, aqui está o seu qrcode",
-        html: `<p>${text}</p>` + "\n" + '<img src="' + canvas.toDataURL() + '" />'
+        html: html
     }
 
     await transporter.sendMail(emailText, function (error, info) {
@@ -544,6 +544,7 @@ async function quartos(infoQuarto) {
 }
 
 async function getQuarto({id}){
+  console.log(id)
     const quarto = await Quarto.findOne({
         where: {
             id
