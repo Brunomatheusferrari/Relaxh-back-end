@@ -68,6 +68,7 @@ async function deleteReserva(req, res, next){
 }
 
 async function getReserva(req, res, next){
+    console.log(req.query)
     try {
         const reserva = await usersServices.getReserva(req.query);
 
