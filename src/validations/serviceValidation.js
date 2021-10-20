@@ -5,9 +5,7 @@ const {
 
 module.exports = {
     postService: [
-        body("descricao")
-        .isString()
-        .withMessage("Formato de Descrição Inválido"),
+
         body("tipo")
         .isString()
         .withMessage("Tipo de Serviço Inválido"),

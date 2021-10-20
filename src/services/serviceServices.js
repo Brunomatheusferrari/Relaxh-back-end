@@ -21,7 +21,9 @@ async function register(serviceInfo){
 }
 
 async function getAll(){
-    const servicos = await Servico.findAll() 
+    const servicos = await Servico.findAll({include: [
+        { association: "comidas", through: { attributes: ["quantidade"] } }
+    ]}) 
     return servicos
 }
 
